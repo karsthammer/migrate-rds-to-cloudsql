@@ -1,0 +1,66 @@
+# The AWS region we want to create the EC2 instance in
+aws_region = "eu-west-1"
+
+# The AWS VPC ID we want to place the EC2 instance in
+aws_vpc_id = "vpc-"
+
+# The AWS subnet ID we want to place the EC2 instance in
+aws_subnet_id = "subnet-"
+
+# The AWS security group ID
+aws_security_group_id = "sg-"
+
+# The name of the SSH key to use in AWS
+aws_key_name = ""
+
+# URL's to the custom MySQL RPM packages that are going to be installed
+# on the EC2 instance
+mysql_client_url = "http://example.com/mysql-client.rpm"
+mysql_server_url = "http://example.com/mysql-server.rpm"
+mysql_shared_url = "http://example.com/mysql-shared.rpm"
+
+# The AWS instance type to use for the intermediate instance
+# defaults to m5.large, preferably use something like c5/m5 type instances
+# because of good network performance and EBS optimization
+intermediate_instance_type = "m5.large"
+
+# The AWS disk size (in GB) to use for the intermediate instance
+# defaults to 100 GB, preferably use a big disk for good IOPS performance
+intermediate_disk_size = "100"
+
+# The IP ranges from where we allow SSH access to the intermediate AWS machine
+intermediate_ssh_allowed_ip_ranges = []
+
+# A list of the databases we want to replicate
+databases = []
+
+# The hostname for the RDS snapshot instance you created
+rds_snapshot_instance = "test-snapshot.abcdef1234.eu-west-1.rds.amazonaws.com"
+
+# The zone to use for the AWS machine, for best performance
+# use the same zone as the RDS machine
+rds_original_zone = "eu-west-1b"
+
+# The hostname for the original RDS cluster (where you took the snapshot from)
+rds_original_instance = "test.abcdef1234.eu-west-1.rds.amazonaws.com"
+
+# Credentials for a AWS RDS user that is able to backup, needed for mysqldump
+rds_backup_username = "root"
+
+rds_backup_password = "password"
+
+# Credentials for the AWS RDS replication user
+rds_replication_username = "replication"
+
+rds_replication_password = "somerandompasswordhere"
+
+# The google project where the SQL DB is going to be
+google_project = "example"
+
+# The google region to use
+google_region = "europe-west2"
+
+# This should be empty initially, only fill when requested to do so.
+# At some point Google will give us an IP that it will use as a source from where
+# it does the replication
+google_replication_ip = ""
