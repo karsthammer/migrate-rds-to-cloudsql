@@ -1,17 +1,16 @@
-# DB migration
+# Migrating AWS RDS/Aurora to Google CloudSQL
 
-## Our 'special' MySQL
-
-For more information about our special patched version of MySQL, please refer
-to [BUILDING_MYSQL.md](BUILDING_MYSQL.md).
+This repo holds a terraform project that we use to move/replicate databases from AWS Aurora to Google CloudSQL.
+In order for this to work we need a patched version of MySQL, more documentation on that is in [BUILDING_MYSQL.md](BUILDING_MYSQL.md).
 
 ## Preparation
 
+* Build the patched version of MySQL, see [BUILDING_MYSQL.md](BUILDING_MYSQL.md) for instructions.
 * Make sure `log_bin` is turned on in RDS and binlog_format is set to `ROW` (note, you will have to reboot the machine after changing this)
 * Login to RDS, and make sure that we have enough retention (_enough retention means: at least the time it takes to restore the full DB to AWS/GCP + a bit extra_) by running:
 
   ```
-  CALL mysql.rds_set_configuration('binlog retention hours', 48);
+  CALL mysql.rds_set_configuration('binlog retention hours', 24);
   CALL mysql.rds_show_configuration;
   ```
 
@@ -35,7 +34,7 @@ to [BUILDING_MYSQL.md](BUILDING_MYSQL.md).
   * The security_group
   * The cluster option group to the same group as the original instance
   * The instance option group to the same group as the original instance
-  * Wait for it to say 'pending-reboot' and reboot the machine
+  * Apply immediately and wait for it to say 'pending-reboot' and reboot the machine
 * Duplicate `terraform.tfvars.example` and fill in the variables.
 
 ## Starting the replication
