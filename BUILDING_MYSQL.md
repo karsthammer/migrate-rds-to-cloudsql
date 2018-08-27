@@ -76,7 +76,7 @@ rpmbuild/
   }
   ```
 
-  This piece of code needs to be commented out (using `/* */`)
+  This piece of code needs to be commented out (using `/* */`) or removed.
 
 * Now, zip everything back together:
 
